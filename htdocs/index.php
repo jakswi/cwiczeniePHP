@@ -40,16 +40,38 @@
                         try {
                             $pdo = new PDO('mysql:host=' . $mysql_host . ';dbname=' . $database . ';port=' . $port, $username, $password);
                             
-                            if(!isset($_GET['table'] || $_GET['table']!='pracownicy'){
 
-                                
-                                }
-                            
-                            if(!isset($_GET['table'] || $_GET['table']!='zespoly'){
-                                
-                                }
 
-                            if(!isset($_GET['table'] || $_GET['table']!='etaty'){                                $stmt = $pdo->query('SELECT * FROM pracownicy');
+
+
+
+                            if(isset($_GET['table']) && $_GET['table']=='zespoly')
+                            {
+                                $stmt = $pdo->query('SELECT * FROM zespoly');                            echo '<ul>';
+                                foreach ($stmt as $row) {
+                                    echo '<li>' . $row['NAZWA'] . '<a href="index.php?delete=' . $row['NAZWA'] ."</a>"; }
+                                $stmt->closeCursor();
+                                echo '</ul>';
+                            }
+                            else if(isset($_GET['table']) && $_GET['table']=='etaty')
+                            {
+                                $stmt = $pdo->query('SELECT * FROM etaty');
+                                echo '<ul>';
+                                foreach ($stmt as $row) {
+                                    echo '<li>' . $row['NAZWA'] . '<a href="index.php?delete=' . $row['NAZWA'] ."</a>"; }
+                                $stmt->closeCursor();
+                                echo '</ul>';
+                            }
+                            else 
+                            {
+                                $stmt = $pdo->query('SELECT * FROM pracownicy');
+                                echo '<ul>';
+                                foreach ($stmt as $row) {
+                                    echo '<li>' . $row['IMIE'] . '<a href="index.php?delete=' . $row['IMIE'] ."</a>"; }
+                                $stmt->closeCursor();
+                                echo '</ul>';
+                            }
+/*                            if(!isset($_GET['table'] || $_GET['table']!='etaty'){                                $stmt = $pdo->query('SELECT * FROM pracownicy');
                                 $stmt = $pdo->query('SELECT * FROM pracownicy');
                                 echo '<ul>';
                                 foreach ($stmt as $row) {
@@ -58,6 +80,18 @@
                                 $stmt->closeCursor();
                                 echo '</ul>';
                                 }
+*/
+
+
+
+
+
+
+
+
+
+
+
                         } catch (PDOException $e) {
                             echo '<div class="alert alert-danger" role="alert">Połączenie nie mogło zostać utworzone.<br /></div>';
                         }
